@@ -1,0 +1,32 @@
+service: m02-whatsapp-esg
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: AWSLemus
+  environment:
+    challenge_token: m02whatsapplemus
+
+package:
+  individually: true
+
+custom:
+  webpack:
+    includeModules: true
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+functions:
+  rest:
+    handler: src/functions/rest/index.handle
+    events:
+      - httpApi:
+          path: /esg/whatsapp/webhook
+          method: post
+      - httpApi:
+          path: /esg/whatsapp/webhook
+          method: get
